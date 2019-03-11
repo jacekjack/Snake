@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    class Circle
+    class Circle        //Class for creating parts of snakes and food
     {
         public int X { get; set; }
         public int Y { get; set; }

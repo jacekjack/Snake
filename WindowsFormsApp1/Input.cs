@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    class Input
+    class Input         //Class for movement by arrows
     {
-        private static Hashtable keyTable = new Hashtable();
+        private static Hashtable keyTable = new Hashtable();        //hashtable for key kontrols
         
         public static bool KeyPress(Keys key)
         {

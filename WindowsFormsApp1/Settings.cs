@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    public enum Diretions
+    public enum Diretions       //directions for movement
     {
         Left,
         Right,
@@ -14,7 +14,7 @@ namespace WindowsFormsApp1
         Down
     };
 
-    class Settings
+    class Settings          // class for setting properties
     {
         public static int Width { get; set; }
         public static int Height { get; set; }
@@ -24,7 +24,7 @@ namespace WindowsFormsApp1
         public static bool GameOver { get; set; }
         public static Diretions direction { get; set; }
 
-        public Settings()
+        public Settings()           //setting default 
         {
             Width = 16;
             Height = 16;

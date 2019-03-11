@@ -12,14 +12,14 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        private List<Circle> Snake = new List<Circle>();
+        private List<Circle> Snake = new List<Circle>();                // creating snake and new food
         private Circle food = new Circle();
 
         public Form1()
         {
             InitializeComponent();
 
-            new Settings();
+            new Settings();             // initializing game
 
             gameTimer.Interval = 1000 / Settings.Speed;
             gameTimer.Tick += updateScreen;
@@ -29,7 +29,7 @@ namespace WindowsFormsApp1
 
         }
 
-        private void startGame()
+        private void startGame()            //starting or restarting the game
         {
 
             label3.Visible = false;
@@ -41,7 +41,7 @@ namespace WindowsFormsApp1
             generateFood();
         }
 
-        private void generateFood()
+        private void generateFood()     //generating food on canvas randomly
         {
             int maxXpos = pbCanvas.Size.Width / Settings.Width;
             int maxYpos = pbCanvas.Size.Height / Settings.Height;
@@ -49,7 +49,7 @@ namespace WindowsFormsApp1
             food = new Circle { X = rnd.Next(0, maxXpos), Y = rnd.Next(0, maxYpos) };
         }
 
-        private void eat()
+        private void eat()          // when the snakes eat the food
         {
             Circle body = new Circle
             {
@@ -64,14 +64,14 @@ namespace WindowsFormsApp1
 
         }
 
-        private void die()
+        private void die()      // setting game over 
         {
             Settings.GameOver = true;
 
         }
-        private void updateScreen(object sender, EventArgs e)
+        private void updateScreen(object sender, EventArgs e)           // update screen by timer
         {
-            if (Settings.GameOver == true)
+            if (Settings.GameOver == true)      //restarting the game after die
             {
                 if (Input.KeyPress(Keys.Enter))
                 {
@@ -79,6 +79,7 @@ namespace WindowsFormsApp1
                 }
             }
             else
+            //setting the direction of snake
             {
                 if (Input.KeyPress(Keys.Right) && Settings.direction != Diretions.Left)
                 {
@@ -97,19 +98,19 @@ namespace WindowsFormsApp1
                     Settings.direction = Diretions.Down;
                 }
 
-                movePlayer();
+                movePlayer(); // moving the snake
             }
-            pbCanvas.Invalidate();
+            pbCanvas.Invalidate();   //redrawing the canvas
         }
 
-        private void movePlayer()
+        private void movePlayer()       //method to move the player
         {
-            for (int i = Snake.Count - 1; i >= 0; i--)
+            for (int i = Snake.Count - 1; i >= 0; i--)      //moving every circle in snake body
             {
 
                 if (i==0)
                 {
-                    switch (Settings.direction)
+                    switch (Settings.direction)     //choosing the direction of moving
                     {
                         case Diretions.Right:
                             Snake[i].X++;
@@ -127,7 +128,7 @@ namespace WindowsFormsApp1
 
                     int maxXpos = pbCanvas.Size.Width / Settings.Width;
                     int maxYpos = pbCanvas.Size.Height / Settings.Height;
-
+                    //checking if snake is hitting a border
                     if (
                         Snake[i].X < 0 || Snake[i].Y < 0 || 
                         Snake[i].X > maxXpos || Snake[i].Y > maxYpos
@@ -136,7 +137,7 @@ namespace WindowsFormsApp1
 
                         die();
                     }
-
+                    // checking if snake hiting itself
                     for (int j = 1; j < Snake.Count; j++)
                     {
                         if (Snake[i].X == Snake[j].X && Snake[i].Y == Snake[j].Y)
@@ -145,7 +146,7 @@ namespace WindowsFormsApp1
                         }
 
                     }
-
+                    //checking if snake hit a food
                     if (Snake[0].X == food.X && Snake[0].Y == food.Y)
                     {
                         eat();
@@ -201,7 +202,7 @@ namespace WindowsFormsApp1
             if (Settings.GameOver == false)
             {
                 Brush snakeColour;
-
+                //setting the snake, head and the body
                 for (int i = 0; i < Snake.Count; i++)
                 {
                     if (i == 0)
@@ -212,7 +213,7 @@ namespace WindowsFormsApp1
                     {
                         snakeColour = Brushes.Green;
                     }
-
+                    //creating a circle parts of snake
                     canvas.FillEllipse(snakeColour,
                                         new Rectangle(
                                             Snake[i].X * Settings.Width,
@@ -229,7 +230,7 @@ namespace WindowsFormsApp1
                 }
             }
             else
-            {
+            {       //setting the message game over
 
                 string gameOver = "Game Over \n" + "Final Score is " + Settings.Score + "\n Press Enter to Restart \n";
                 label3.Text = gameOver;
